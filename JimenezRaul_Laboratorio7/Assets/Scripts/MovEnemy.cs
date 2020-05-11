@@ -14,18 +14,24 @@ public class MovEnemy : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        wpList = new List<GameObject>();
         foreach(Transform child in wp.transform)
         {
             wpList.Add(child.gameObject);
         }
+        agent.SetDestination(wpList[Random.Range(0, wpList.Count - 1)].transform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(agent)
+        if(agent.remainingDistance < 0.2f)
         {
-            agent.SetDestination(wpList[Random.Range(0, wpList.Count - 1)].transform.position);
+            if (wp)
+            {
+                agent.SetDestination(wpList[Random.Range(0, wpList.Count - 1)].transform.position);
+            }
+            
         }
     }
 }
